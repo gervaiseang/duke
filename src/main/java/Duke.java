@@ -1,6 +1,7 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class Duke {
     public static void main(String[] args) throws IOException {
@@ -12,23 +13,34 @@ public class Duke {
         System.out.println(logo + "\nHello! I'm Duke \n" + "What can I do for you?");
         echoMessage();
     }
-    private static void echoMessage() throws IOException {
+    private static void echoMessage() {
+            boolean quit = false;
+            final String LIST = "list";
+            final String BYE = "bye";
+            List<String> bookList = new ArrayList<>();
+            while(!quit) {
+                Scanner readInput = new Scanner(System.in);
+                String command = readInput.nextLine();  // Read user input
 
-        try {
-            String line;
-            BufferedReader br;
-            br = new BufferedReader(new InputStreamReader(System.in));
-            line = br.readLine();
+                switch (command) {
+                    case LIST:
+                        if(!bookList.isEmpty())  {
+                            for(int i=1; i<=bookList.size(); i++) {
+                                System.out.println(i + ". " + bookList.get(i-1));
+                            }
+                        }
+                        break;
+                    case BYE:
+                        System.out.println(" Bye. Hope to see you again soon!");
+                        quit = true;
+                        break;
+                    default:
+                        bookList.add(command);
+                        System.out.println("added: " + command);
+                }
 
-            String input = "bye";
-            if (line.equals(input))
-                System.out.println("Bye. Hope to see you again soon!");
-            else{
-                System.out.println(line);
             }
-            br.close();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
+
     }
+
 }
