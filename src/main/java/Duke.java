@@ -1,13 +1,19 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
 public class Duke {
     private static List<Task> bookList = new ArrayList<>();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
+
+        File file = new File("src/main/java/data/DukeTasks.txt");
+        bookList = readFile(file);
+
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -37,6 +43,7 @@ public class Duke {
 
             } else if (command.equals("bye")) {
                 System.out.println(" Bye. Hope to see you again soon!");
+                saveFile(file);
                 break;
             } else {
                 String[] parts = command.split(" "); //Here the string it is divide taking as reference the space
@@ -116,6 +123,55 @@ public class Duke {
         }
         catch (NumberFormatException e) {
             System.out.println("☹ OOPS!!! Invalid input, please enter an integer.");
+        }
+    }
+    private static ArrayList<Task> readFile(File fr) throws FileNotFoundException {
+
+        ArrayList<Task> arrayList = new ArrayList<>();
+        try {
+            Scanner scanner = new Scanner(fr);
+
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] words = line.split(" \\| ");
+
+                if (words[0].equals("T")) {
+                    Todo readT = new Todo(words[2]);
+                    if (words[1].equals("1")) {
+                        readT.isDone = true;
+                    }
+                    arrayList.add(readT);
+                } else if (words[0].equals("D")) {
+                    Deadline readD = new Deadline(words[2], words[3]);
+                    if (words[1].equals("1")) {
+                        readD.isDone = true;
+                    }
+                    arrayList.add(readD);
+                } else { //event
+                    Event readE = new Event(words[2], words[3]);
+                    if (words[1].equals("1")) {
+                        readE.isDone = true;
+                    }
+                    arrayList.add(readE);
+                }
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        }
+        return arrayList;
+    }
+
+    private static void saveFile(File file){
+        try {
+            FileWriter fw = new FileWriter(file);
+            for (int i = 0; i < bookList.size(); i++) {
+                fw.append(bookList.get(i) + System.lineSeparator());
+            }
+            fw.flush();
+            fw.close();
+        } catch (IOException IOE) {
+            System.out.println("Something went wrong " + IOE.getMessage());
         }
     }
 

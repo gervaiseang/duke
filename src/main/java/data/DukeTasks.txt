@@ -1,0 +1,3 @@
+[T][✓] borrow
+[T][✘] read
+[E][✘] meeting (at: CBD 2pm)
