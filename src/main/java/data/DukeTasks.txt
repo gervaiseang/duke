@@ -1,2 +1,2 @@
-[T][✓] buy bread
-[D][✘] return book (by: 2/12/2019 1800)
+[T][✓] buy book
+[E][✘] food bash (at: friend's house)
