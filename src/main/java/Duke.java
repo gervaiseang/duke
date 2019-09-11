@@ -2,12 +2,23 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Duke {
     private static List<Task> bookList = new ArrayList<>();
+    enum dateTimeFormat{
+        NONE,
+        DATE,
+        TIME,
+        DATE_TIME_FORMAT,
+    }
 
     public static void main(String[] args) throws FileNotFoundException {
 
@@ -95,6 +106,7 @@ public class Duke {
                 if (parts.length == 1)
                     throw new DukeException("☹ OOPS!!! The description of a deadline cannot be empty.");
                 String[] tempDeadline = nextCommand.split(" /by ");
+                if (!isValidDateTime(tempDeadline[1])) throw  new DukeException("Please enter correct date time format: dd/mm/yyyy hhmm");
                 Deadline deadline = new Deadline(tempDeadline[0], tempDeadline[1]);
                 bookList.add(deadline);
                 System.out.println("Got it. I've added this task:");
@@ -173,6 +185,21 @@ public class Duke {
         } catch (IOException IOE) {
             System.out.println("Something went wrong " + IOE.getMessage());
         }
+    }
+
+    private static boolean isValidDateTime (String dateTime){
+        SimpleDateFormat dateOnlyFormat =  new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat timeOnlyFormat =  new SimpleDateFormat("HHmm");
+        SimpleDateFormat dateHourFormat = new SimpleDateFormat("d/M/yyyy HHmm");
+        try {
+            //dateOnlyFormat.parse(dateTime);
+            //timeOnlyFormat.parse(dateTime);
+            dateHourFormat.parse(dateTime);
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
+
     }
 
 }
