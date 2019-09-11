@@ -60,10 +60,7 @@ public class Duke {
                 String[] parts = command.split(" "); //Here the string it is divide taking as reference the space
                 String cmd = parts[0];
                 if (cmd.equals("done")){
-                    markDone(parts[1]);
-                }
-                else if (cmd.equals("delete")){
-                    deleteTask(parts[1]);
+                        markDone(parts[1]);
                 }
                 else{
                     addTaskList(command);
@@ -140,16 +137,6 @@ public class Duke {
             System.out.println("☹ OOPS!!! Invalid input, please enter an integer.");
         }
     }
-
-    private static void deleteTask(String taskNumber) {
-        int index = Integer.parseInt(taskNumber) - 1;
-        Task deleteTask = bookList.get(index);
-        bookList.remove(deleteTask);
-        System.out.println("Noted. I've removed this task:");
-        System.out.println("  " + deleteTask.toString());
-        System.out.println("Now you have " + bookList.size() + " tasks in the list.");
-    }
-
     private static ArrayList<Task> readFile(File fr) throws FileNotFoundException {
 
         ArrayList<Task> arrayList = new ArrayList<>();
