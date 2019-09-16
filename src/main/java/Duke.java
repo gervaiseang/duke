@@ -66,7 +66,6 @@ public class Duke {
                     deleteTask(parts[1]);
                 }
                 else if (cmd.equals("find")){
-                    System.out.println("Here are the matching tasks in your list:");
                     String sequence = parts[1];
                     int x = 1;
                     if (!bookList.isEmpty()) {

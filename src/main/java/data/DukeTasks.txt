@@ -1,4 +1,3 @@
-[T][✘] buy book
-[T][✓] return book
-[D][✘] return book (by: 2/12/2019 1800)
-[E][✘] do nothing (at: home)
+[T][✓] borrow book
+[T][✘] buy flowers
+[E][✘] meeting (at: CBD area)
